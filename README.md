@@ -1,3 +1,3 @@
-## SMPL ENGINe
+## SMPL ENGINE
 
 Simple 2D engine using SDL and C++
