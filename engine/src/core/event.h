@@ -34,5 +34,6 @@ class event_system{
 
 };
 
+extern event_system event_syst;
 
 

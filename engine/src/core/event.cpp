@@ -1,5 +1,5 @@
 #include "event.h"
-
+event_system event_syst;
 //initialized event system
 b8 event_system::event_init(){
     if(initialized == TRUE){

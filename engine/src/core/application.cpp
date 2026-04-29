@@ -48,19 +48,17 @@ application::~application()
 
 FAPI b8 application::application_run()
 {
-    event_syst.fire(EVENT_QUIT);
     while (is_running())
     {
 
-        
         SDL_Event e;
-        while (SDL_PollEvent(&e)) {
-            if (event_syst.is_custom_event(e, EVENT_QUIT)) {
-                FINFO("Event system works! EVENT_KEY_DOWN received.");
+        while(SDL_PollEvent(&e)){
+            if(e.type == SDL_EVENT_QUIT){
+                running = FALSE;
             }
         }
+        
     }
-    running = false;
     
     syst_logger.shutdown_logger();
     event_syst.event_shutdown();
