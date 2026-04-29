@@ -1,9 +1,10 @@
 #include "input.h"
 
-
+input input_syst;
 
 b8 input::input_init(){
     initialized = TRUE;
+    return TRUE;
 }
 
 void input::input_shutdown(){

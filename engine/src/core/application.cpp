@@ -4,7 +4,7 @@ using namespace engine;
    
 
 logger syst_logger;
-event_system event_syst;
+
 
 
 application::application()
@@ -23,6 +23,7 @@ application::application()
 
     syst_logger.init_logger();
     event_syst.event_init();
+    input_syst.input_init();
 
       //log test
     FFATAL("A TEST MESSAGE: %f", 3.14);
@@ -50,18 +51,54 @@ FAPI b8 application::application_run()
 {
     while (is_running())
     {
-
+        input_syst.input_update();
         SDL_Event e;
         while(SDL_PollEvent(&e)){
             if(e.type == SDL_EVENT_QUIT){
                 running = FALSE;
             }
+            input_syst.process_input(e);
+            if(event_syst.is_custom_event(e,EVENT_KEY_DOWN)){
+                SDL_Scancode scancode = (SDL_Scancode)(u64)e.user.data1;
+
+                
+
+
+
+                if(scancode == SDL_SCANCODE_ESCAPE){
+                    FINFO("Escape pressed, shutting down.");
+                    running = FALSE;
+                }else if(scancode == SDL_SCANCODE_A){
+                    FDEBUG("Explicit - A key pressed!");
+
+                }else{
+                    SDL_Keycode keycode = SDL_GetKeyFromScancode(scancode,SDL_KMOD_NONE, false );
+                    const char* keyname = SDL_GetKeyName(keycode);
+                    FDEBUG("'%s' key pressed in window.", keyname);
+                }
+
+                
+                
+            }
+
+            if(event_syst.is_custom_event(e,EVENT_KEY_UP)){
+                SDL_Scancode scancode = (SDL_Scancode)(u64)e.user.data1;
+                if (scancode == SDL_SCANCODE_B) {
+                    FDEBUG("Explicit - B key released!");
+                } else {
+                    SDL_Keycode keycode = SDL_GetKeyFromScancode(scancode,SDL_KMOD_NONE, false );
+                    const char* keyname = SDL_GetKeyName(keycode);
+                    FDEBUG("'%s' key pressed in window.", keyname);
+                }
+            }
+            
         }
         
     }
     
     syst_logger.shutdown_logger();
     event_syst.event_shutdown();
+    input_syst.input_shutdown();
 
     return TRUE;
 

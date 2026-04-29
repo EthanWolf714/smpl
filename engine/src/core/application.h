@@ -4,6 +4,7 @@
 #include <SDL3/SDL_main.h>
 #include "logger.h"
 #include "event.h"
+#include "input.h"
 #include <string.h>
 
 

@@ -4,6 +4,7 @@
 #include "event.h"
 
 
+
 enum key_state{
     OnPress,
     OnRelease,
@@ -49,3 +50,4 @@ class input{
 };
 
 
+extern input input_syst;
